@@ -1,0 +1,17 @@
+:root {
+    --darkblue: #0a376d;
+}
+
+
+#height-7 {
+    height: 7vh;
+}
+
+#bg-darkblue {
+    background-color: #0a376d;
+}
+
+#btn-outline-darkblue {
+    border: 1px solid #0a376d;
+    color: white
+}
