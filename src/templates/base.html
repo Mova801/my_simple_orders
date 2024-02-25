@@ -4,6 +4,7 @@
     <title>{% block title %}{% endblock %}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -16,34 +17,101 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        :root {
+            --darkblue: #0a376d;
+        }
+
+        .height-7 {
+            height: 7vh;
+        }
+
+        .content-box {
+            height: 80vh;
+        }
+
+        .bg-darkblue {
+            background-color: #0a376d;
+        }
+
+        .btn-outline-darkblue {
+            border: 1px solid #0a376d;
+            color: white
+        }
+
+        .card {
+            /*transition: border-color 0.5s, box-shadow 0.5s;*/
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.005);
+            border-color: rgba(13, 110, 253, 0.7);
+            box-shadow: 0px 0px 10px 2px rgba(13, 110, 253, 0.6);
+        }
+
+        .operation-danger {
+            transition: all 0.25s;
+        }
+
+        .operation-danger:hover {
+            color: #ff0000;
+        }
+
+        .operation-success {
+            transition: all 0.25s;
+        }
+
+        .operation-success:hover {
+            color: #139821;
+        }
+
+        .toast {
+            position: absolute;
+            bottom: 10%;
+            right: 0.5%;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#myBtn").click(function () {
+                let myToast = bootstrap.Toast.getOrCreateInstance($("#myToast")[0]);
+                console.log(myToast);
+                myToast.show();
+            });
+        });
+
+        const toastTrigger = document.getElementById('liveToastBtn')
+        const toastLive = document.getElementById('liveToast')
+
+        if (toastTrigger) {
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive)[0]
+            toastTrigger.addEventListener('click', () => {
+                toastBootstrap.show()
+            })
+        }
+    </script>
 </head>
 <body class="overflow-hidden">
 <nav class="navbar bg-primary text-white">
-    <form class="container-fluid">
-        <h2 class="navbar-brand text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-book-half"
-                 viewBox="0 0 16 16">
-                <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
-            </svg>
+    <div class="container-fluid">
+        <h2 class="navbar-brand">
+            <i class="bi bi-funnel"></i>
             my_simple_orders [PH]
         </h2>
-        <h1 class="text-center">
-            {% block pageTitle %}{% endblock %}
-        </h1>
-        <div class="d-flex">
-            <button class="btn btn-light rounded-0 bg-darkblue" type="submit">
-                Filtro
+        <form class="d-flex" style="width: 25%;" role="search">
+            <button class="btn btn-dark rounded-0 bg-darkblue me-2 border-0" type="submit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel"
                      viewBox="0 0 16 16">
                     <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2z"/>
                 </svg>
             </button>
-            <input type="search" class="form-control me-2 rounded-0" placeholder="Cerca Ordine" aria-label="Cerca"
-                   aria-describedby="basic-addon1" name="order_search_bar">
-            <button class="btn btn-light rounded-0 bg-darkblue" type="submit">Cerca
-            </button>
-        </div>
-    </form>
+            <input class="form-control me-2 rounded-0" type="search" placeholder="Cerca ordini" aria-label="Cerca">
+            <button class="btn bg-darkblue rounded-0 me-2 text-white" type="submit">Cerca</button>
+        </form>
+    </div>
 </nav>
 {% block contentTitle %}{% endblock %}
 {% block content %}{% endblock %}
@@ -66,7 +134,7 @@
         <br>
         Nuovo Ordine
     </a>
-    <a type="button" class="btn btn-primary btn-outline-light rounded-0" href="http://127.0.0.1:8000/on_delivery">
+    <a type="button" class="btn btn-primary btn-outline-light rounded-0" href="http://127.0.0.1:8000/orders_history">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-cart-check"
              viewBox="0 0 16 16">
             <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>

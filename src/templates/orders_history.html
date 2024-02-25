@@ -1,6 +1,103 @@
 {% extends "base.html" %}
-{% block title %}MSO - history [PH]{% endblock %}
+{% block title %}MSO - History [PH]{% endblock %}
 {% block pageTitle %}Storia Ordini [PH]{% endblock %}
+{% block contentTitle %}
+<div class="container-fluid d-flex shadow-lg center text-white bg-darkblue"
+     style="height:5rem">
+    <h4 class="col-1"></h4>
+    <h4 class="col align-self-center">Data Arrivo</h4>
+    <h4 class="col align-self-center">Info Cliente</h4>
+    <h4 class="col align-self-center">Corriere</h4>
+    <h4 class="col align-self-center">Stato Pagamento</h4>
+    <h4 class="col align-self-center">Stato Consegna</h4>
+    <h4 class="col align-self-center">Operazioni</h4>
+</div>
+{% endblock %}
 {% block content %}
-<h1>Storia Ordini</h1>
+<div class="container-fluid pt-2 mb-5 overflow-auto content-box">
+    {% for order in orders %}
+    <div class="card d-flex rounded-0 shadow-sm mb-2 ml-1 mr-1" style="height: 4rem;">
+        <div class="row no-gutters">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="green"
+                 class="bi bi-folder-check p-2 border-right col-1" viewBox="0 0 16 16">
+                <path d="m.5 3 .04.87a2 2 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2m5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19q-.362.002-.683.12L1.5 2.98a1 1 0 0 1 1-.98z"/>
+                <path d="M15.854 10.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.707 0l-1.5-1.5a.5.5 0 0 1 .707-.708l1.146 1.147 2.646-2.647a.5.5 0 0 1 .708 0"/>
+            </svg>
+            <div class="row card-body d-flex">
+                <p class="card-text col border-right text-truncate">
+                    {{order.get_date()}}
+                </p>
+                <a type="button" class="card-link col text-primary align-self-start text-truncate" data-toggle="modal"
+                   data-target="#order{{order.order_id}}">
+                    <b>{{order.customer_name}} {{order.customer_surname}} ({{order.customer_cellphone}})</b>
+                    <i class="bi bi-info-circle" width="16"></i>
+                </a>
+                <p class="card-text col border-right border-left text-truncate">
+                    {{order.delivery_channel}}</p>
+                <p class="card-text col border-right text-truncate">
+                    {{order.payment_state_str()}} </p>
+                <div class="card-text col align-self-start border-right  text-truncate">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill={{order.delivery_state_color()}}
+                         class="bi bi-circle-fill align-self-center" viewBox="0 0 16 16">
+                        <circle cx="8" cy="8" r="8"/>
+                    </svg>
+                    &nbsp;{{order.delivery_state}}
+                </div>
+                <div class="btn-group col" role="group" aria-label="operations">
+                    <a type="button" class="card-text col">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                             class="bi bi-pin-angle operation-danger" viewBox="0 0 16 16">
+                            <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134-3.133a3 3 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146m.122 2.112v-.002zm0-.002v.002a.5.5 0 0 1-.122.51L6.293 6.878a.5.5 0 0 1-.511.12H5.78l-.014-.004a5 5 0 0 0-.288-.076 5 5 0 0 0-.765-.116c-.422-.028-.836.008-1.175.15l5.51 5.509c.141-.34.177-.753.149-1.175a5 5 0 0 0-.192-1.054l-.004-.013v-.001a.5.5 0 0 1 .12-.512l3.536-3.535a.5.5 0 0 1 .532-.115l.096.022c.087.017.208.034.344.034q.172.002.343-.04L9.927 2.028q-.042.172-.04.343a1.8 1.8 0 0 0 .062.46z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div id="order{{order.order_id}}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Informazioni Ordine</h4>
+                </div>
+                <div class="modal-body text-left">
+                    <p><b>Cliente:</b> {{order.customer_name}} {{order.customer_surname}}</p>
+                    <p><b>Cellulare:</b> {{order.customer_cellphone}}</p>
+                    <hr class="hr-text" data-content="Info Consegna">
+                    <p><b>Data arrivo prevista:</b> {{order.get_date()}}</p>
+                    <p><b>Libri ordinati:</b> {{order.order_content}}</p>
+                    <p><b>Canale consegna:</b> {{order.delivery_channel}}</p>
+                    <p><b>Stato consegna:</b>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
+                             fill={{order.delivery_state_color()}}
+                             class="bi bi-circle-fill align-self-start" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="8"/>
+                        </svg>
+                        {{order.delivery_state}}
+                    </p>
+                    <hr>
+                    <p><b>Stato pagamento:</b> {{order.payment_state_str()}}</p>
+                    <hr>
+                    <p><b>Stato ordine:</b> {{order.finished_str()}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Chiudi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="pt-5 text-center">
+        <h2>Nessun ordine presente</h2>
+        <br>
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="red" class="bi bi-x-circle-fill"
+             viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+        </svg>
+    </div>
+    {% endfor %}
+</div>
+<!--<div style="height:3.4rem"></div>-->
 {% endblock %}
