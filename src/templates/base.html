@@ -19,6 +19,7 @@
             crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
     <style>
         :root {
             --darkblue: #0a376d;
@@ -116,7 +117,7 @@
 {% block contentTitle %}{% endblock %}
 {% block content %}{% endblock %}
 <div class="btn-group fixed-bottom" role="group" aria-label="Basic example">
-    <a type="button" class="btn btn-primary btn-outline-light rounded-0 d-block" href="http://127.0.0.1:8000/index">
+    <a type="button" class="btn btn-primary btn-outline-light rounded-0 d-block" href="{{url_for('index'}}">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-house"
              viewBox="0 0 16 16">
             <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
@@ -124,7 +125,7 @@
         <br>
         Home
     </a>
-    <a type="button" class="btn btn-primary btn-outline-light" href="http://127.0.0.1:8000/add_order">
+    <a type="button" class="btn btn-primary btn-outline-light" href={{url_for('add_order')}}>
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
              class="bi bi-pencil-square" viewBox="0 0 16 16">
             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -134,7 +135,7 @@
         <br>
         Nuovo Ordine
     </a>
-    <a type="button" class="btn btn-primary btn-outline-light rounded-0" href="http://127.0.0.1:8000/orders_history">
+    <a type="button" class="btn btn-primary btn-outline-light rounded-0" href="{{url_for('order_history')}}">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-cart-check"
              viewBox="0 0 16 16">
             <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
